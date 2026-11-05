@@ -1,7 +1,7 @@
 # GENERATED from scripts/cms-config.src.yml by scripts/build-cms-config.py - edit the source, not this file.
 backend:
   name: github
-  repo: CLIENT_GITHUB_USERNAME/keysflatsfishing
+  repo: Saltwater-Marketing/shadowcaster-website
   branch: main
   commit_messages:
     create: Add {{collection}} “{{slug}}” (website editor)

@@ -2,7 +2,7 @@
 # Every "Publish" saves the change to GitHub and Netlify rebuilds the live site in about a minute.
 backend:
   name: github
-  repo: CLIENT_GITHUB_USERNAME/keysflatsfishing   # <-- set to the client's repo before launch
+  repo: Saltwater-Marketing/shadowcaster-website
   branch: main
   commit_messages:
     create: "Add {{collection}} “{{slug}}” (website editor)"

@@ -51,7 +51,7 @@ npm run build    # outputs _site/
 
 1. Repo lives in the client's GitHub; SWM team members added as collaborators; Claude GitHub app approved on the repo.
 2. Netlify → Add new site → Import from GitHub → pick this repo → Deploy (settings come from `netlify.toml`).
-3. Editor login: Netlify → Site configuration → Access & security → OAuth → Install provider → GitHub (needs a GitHub OAuth app: Homepage `https://keysflatsfishing.com`, callback `https://api.netlify.com/auth/done`). Then put the repo name in `src/admin/config.yml` (`repo:`).
+3. Editor login: Netlify → Site configuration → Access & security → OAuth → Install provider → GitHub (needs a GitHub OAuth app: Homepage `https://keysflatsfishing.com`, callback `https://api.netlify.com/auth/done`). The repo name is set in `scripts/cms-config.src.yml` (`repo:`); if the repo moves, update it there and run `python3 scripts/build-cms-config.py`.
 4. Netlify → Forms → enable form detection; set a notification email for the "contact" form.
 5. Domain: Netlify → Domain management → add keysflatsfishing.com, then update DNS at the registrar.
 6. Test: contact form, Book Now buttons (FareHarbor), GTM/GA4 real-time, a few old URLs redirecting.
