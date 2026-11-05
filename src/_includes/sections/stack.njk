@@ -1,0 +1,11 @@
+{#- helper A: stacked white cards, each with text + photo (e.g. "Where We Fish") -#}
+{% include "sechead.njk" %}
+<div class="stack">
+{%- for c in s.items %}
+  <div class="stack__item{{ ' stack__item--flip' if loop.index is even and s.alternate }}">
+    <div class="stack__text"><h3>{{ c.title }}</h3><span class="divider"></span>{{ c.text | md | safe }}</div>
+    <div class="stack__media">{% set i = { src: c.image, alt: c.alt or c.title } %}{% include "img.njk" %}</div>
+  </div>
+{%- endfor %}
+</div>
+{%- if s.button and s.button.label %}<div class="btn-row center">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}

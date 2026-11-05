@@ -8,6 +8,7 @@
 {%- set ogImage = site.url + (og_image or (hero and hero.image) or image or site.default_image) %}
 <title>{{ pageTitle }}</title>
 <meta name="description" content="{{ description }}">
+{%- if noindex %}<meta name="robots" content="noindex">{% endif %}
 <link rel="canonical" href="{{ canonical }}">
 <meta property="og:type" content="{{ 'article' if layout == 'post.njk' else 'website' }}">
 <meta property="og:site_name" content="{{ site.name }}">

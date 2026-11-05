@@ -1,0 +1,6 @@
+{#- helper B: small centered note — optional h4 title + text (e.g. "Additional Species") -#}
+<div class="note center">
+  {%- if s.title %}<h4>{{ s.title }}</h4>{% endif %}
+  {%- if s.text %}{{ s.text | md | safe }}{% endif %}
+  {%- if s.button and s.button.label %}<div class="btn-row">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}
+</div>

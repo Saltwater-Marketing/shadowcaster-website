@@ -1,0 +1,4 @@
+{#- helper B: row of coloured links to the four season pages -#}
+<nav class="season-pills" aria-label="Fishing seasons">
+{%- for p in s.items %}<a class="pill--{{ p.season }}" href="{{ p.url }}">{{ p.label }}</a>{% endfor %}
+</nav>

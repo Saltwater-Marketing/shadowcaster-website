@@ -1,0 +1,351 @@
+# Website editor for keysflatsfishing.com  (open https://keysflatsfishing.com/admin/)
+# Every "Publish" saves the change to GitHub and Netlify rebuilds the live site in about a minute.
+backend:
+  name: github
+  repo: CLIENT_GITHUB_USERNAME/keysflatsfishing   # <-- set to the client's repo before launch
+  branch: main
+  commit_messages:
+    create: "Add {{collection}} “{{slug}}” (website editor)"
+    update: "Update {{collection}} “{{slug}}” (website editor)"
+    delete: "Delete {{collection}} “{{slug}}” (website editor)"
+    uploadMedia: "Upload “{{path}}” (website editor)"
+    deleteMedia: "Delete “{{path}}” (website editor)"
+
+site_url: https://keysflatsfishing.com
+display_url: https://keysflatsfishing.com
+logo_url: /images/frame-181.webp
+media_folder: src/images/uploads
+public_folder: /images/uploads
+publish_mode: simple
+locale: en
+
+# ---------- Reusable field groups ----------
+x-button: &button
+  { label: "Button", name: button, widget: object, required: false, collapsed: true, hint: "Leave the link empty to open the FareHarbor booking window.",
+    fields: [
+      { label: "Button text", name: label, widget: string, required: false },
+      { label: "Link (e.g. /about/ — empty = booking)", name: url, widget: string, required: false },
+      { label: "Style", name: style, widget: select, required: false, options: [ { label: "Blue (default)", value: "" }, { label: "White", value: white }, { label: "Small", value: sm } ] } ] }
+
+x-bg: &bg
+  { label: "Background", name: bg, widget: select, required: false, default: paper, options: [
+      { label: "Paper texture (default)", value: paper }, { label: "White", value: white }, { label: "Light blue (torn edge)", value: sky },
+      { label: "Light blue fade", value: skyfade }, { label: "Blue (torn edge)", value: blue }, { label: "White paper (torn edge)", value: torn },
+      { label: "Blue topo map", value: topo }, { label: "Blue band", value: pills }, { label: "Photo (choose below)", value: photo } ] }
+
+x-bgimg: &bgimg { label: "Background photo (when Background = Photo)", name: bg_image, widget: image, required: false }
+x-dark: &dark { label: "White text (for dark photos)", name: dark, widget: boolean, required: false, default: false }
+x-eyebrow: &eyebrow { label: "Small label above heading", name: eyebrow, widget: string, required: false }
+x-heading: &heading { label: "Heading (wrap words in *stars* to make them blue)", name: heading, widget: string, required: false }
+x-divider: &divider { label: "Show line under heading", name: divider, widget: boolean, required: false, default: true }
+x-intro: &intro { label: "Intro text", name: intro, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [] }
+x-text: &text { label: "Text", name: text, widget: markdown, required: false, buttons: [bold, italic, link, bulleted-list], editor_components: [] }
+x-id: &anchor { label: "Anchor name (advanced)", name: id, widget: string, required: false }
+x-checks: &checks
+  { label: "Checkmark list", name: checks, widget: list, required: false, collapsed: true, summary: "{{fields.title}} {{fields.text}}",
+    fields: [ { label: "Bold title (optional)", name: title, widget: string, required: false }, { label: "Text", name: text, widget: string, required: false } ] }
+
+x-sections: &sections
+  label: "Page sections (drag to reorder)"
+  name: sections
+  widget: list
+  required: false
+  collapsed: true
+  summary: "{{fields.heading}}"
+  types:
+    - label: "Text block"
+      name: text
+      widget: object
+      fields: [ *eyebrow, *heading, *divider, *text, *checks, *button, { label: "Alignment", name: align, widget: select, required: false, options: [center, left] }, *bg, *bgimg, *dark, *anchor ]
+    - label: "Text + photo side by side"
+      name: split
+      widget: object
+      fields:
+        - *eyebrow
+        - *heading
+        - { label: "Extra-large heading", name: heading_size, widget: select, required: false, options: [ { label: "Normal", value: "" }, { label: "Extra large", value: xl } ] }
+        - *divider
+        - { label: "Sub-heading", name: subheading, widget: string, required: false }
+        - *text
+        - *checks
+        - { label: "Text after the list", name: after, widget: markdown, required: false, buttons: [bold, italic, link] }
+        - *button
+        - { label: "Photo", name: image, widget: image, required: false }
+        - { label: "Photo description (for Google & screen readers)", name: image_alt, widget: string, required: false }
+        - { label: "Photo side", name: image_side, widget: select, required: false, options: [right, left] }
+        - { label: "Title under photo", name: image_title, widget: string, required: false }
+        - { label: "Text under photo", name: image_text, widget: markdown, required: false, buttons: [bold, italic, link] }
+        - { label: "White box instead of photo", name: panel, widget: object, required: false, collapsed: true, fields: [ { label: "Heading", name: heading, widget: string, required: false }, *text, *checks, { label: "Text after the list", name: after, widget: markdown, required: false, buttons: [bold, italic, link] } ] }
+        - { label: "Layout", name: layout, widget: select, required: false, options: [ { label: "Normal", value: "" }, { label: "White card over background photo", value: card }, { label: "Wider text", value: wide-text } ] }
+        - *bg
+        - *bgimg
+        - *dark
+        - *anchor
+    - label: "Cards / grid"
+      name: cards
+      widget: object
+      fields:
+        - *eyebrow
+        - *heading
+        - *divider
+        - *intro
+        - { label: "Card style", name: style, widget: select, required: false, default: white, options: [
+            { label: "White torn-paper card", value: white }, { label: "Photo with blue box", value: blue }, { label: "Photo with white box", value: plain },
+            { label: "Checkmark boxes", value: check }, { label: "Round fish icons", value: species }, { label: "Photos with captions", value: caption },
+            { label: "Season cards (coloured)", value: season }, { label: "No box", value: bare } ] }
+        - { label: "Cards per row", name: columns, widget: number, required: false, default: 3, min: 1, max: 4 }
+        - { label: "Card text alignment", name: align, widget: select, required: false, options: [ { label: "Centred", value: "" }, { label: "Left", value: left } ] }
+        - { label: "Photo shape (advanced, e.g. 4/3)", name: ratio, widget: string, required: false }
+        - label: "Cards"
+          name: items
+          widget: list
+          summary: "{{fields.title}}"
+          collapsed: true
+          fields:
+            - { label: "Title", name: title, widget: string, required: false }
+            - { label: "Text", name: text, widget: markdown, required: false, buttons: [bold, italic, link] }
+            - { label: "Photo / icon", name: image, widget: image, required: false }
+            - { label: "Photo description", name: alt, widget: string, required: false }
+            - { label: "Link (optional)", name: link, widget: string, required: false }
+            - { label: "Button text (optional)", name: button_label, widget: string, required: false }
+            - { label: "Card background image (season cards)", name: bg_image, widget: image, required: false }
+            - { label: "White text", name: dark, widget: boolean, required: false, default: false }
+            - { label: "Highlight in blue", name: highlight, widget: boolean, required: false, default: false }
+        - { label: "Note under the cards", name: outro, widget: markdown, required: false, buttons: [bold, italic, link] }
+        - *button
+        - *bg
+        - *bgimg
+        - *dark
+        - *anchor
+    - label: "Table"
+      name: table
+      widget: object
+      fields:
+        - *eyebrow
+        - *heading
+        - *divider
+        - *intro
+        - { label: "Column headings", name: columns, widget: list, field: { label: "Heading", name: c, widget: string } }
+        - { label: "Rows", name: rows, widget: list, summary: "{{fields.cells}}", fields: [ { label: "Cells (left to right)", name: cells, widget: list, field: { label: "Cell", name: cell, widget: string } } ] }
+        - { label: "Note under the table", name: outro, widget: markdown, required: false, buttons: [bold, italic, link] }
+        - *bg
+        - *bgimg
+        - *dark
+        - *anchor
+    - label: "Rates table (prices come from Settings → Trips & Prices)"
+      name: rates
+      widget: object
+      fields: [ *eyebrow, *heading, { label: "Side heading", name: side_heading, widget: string, required: false }, { label: "Side text", name: side, widget: markdown, required: false, buttons: [bold, italic, link, bulleted-list] }, { label: "Side photo (instead of text)", name: image, widget: image, required: false }, { label: "Photo description", name: image_alt, widget: string, required: false }, { label: "Note under prices", name: box_note, widget: string, required: false }, *button, *bg, *bgimg, *dark, *anchor ]
+    - label: "Trip cards with prices (from Settings → Trips & Prices)"
+      name: trips
+      widget: object
+      fields: [ *eyebrow, *heading, *divider, *button, *bg, *bgimg, *dark, *anchor ]
+    - label: "Season-by-season list"
+      name: season_list
+      widget: object
+      fields:
+        - *eyebrow
+        - *heading
+        - *divider
+        - *intro
+        - { label: "Seasons", name: items, widget: list, summary: "{{fields.title}}", fields: [
+            { label: "Season colour", name: season, widget: select, options: [winter, spring, summer, fall] },
+            { label: "Months label", name: label, widget: string },
+            { label: "Title", name: title, widget: string },
+            { label: "Text", name: text, widget: markdown, buttons: [bold, italic, link] },
+            { label: "Photo", name: image, widget: image },
+            { label: "Photo description", name: alt, widget: string, required: false },
+            { label: "Learn more link", name: link, widget: string, required: false } ] }
+        - *bg
+        - *bgimg
+        - *dark
+        - *anchor
+    - label: "Captains (edit in Settings → Captains)"
+      name: captains
+      widget: object
+      fields: [ *eyebrow, *heading, *divider, *button, *bg, *bgimg, *dark, *anchor ]
+    - label: "Reviews (edit in Settings → Reviews)"
+      name: reviews
+      widget: object
+      fields: [ *eyebrow, *heading, *divider, *intro, *bg, *bgimg, *dark, *anchor ]
+    - label: "Latest fishing reports"
+      name: latest_posts
+      widget: object
+      fields: [ *eyebrow, *heading, *text, *button, *bg, *bgimg, *dark, *anchor ]
+    - label: "FAQ"
+      name: faq
+      widget: object
+      fields:
+        - *eyebrow
+        - *heading
+        - *divider
+        - *intro
+        - { label: "Questions", name: items, widget: list, summary: "{{fields.q}}", fields: [ { label: "Question", name: q, widget: string }, { label: "Answer", name: a, widget: markdown, buttons: [bold, italic, link] } ] }
+        - *bg
+        - *bgimg
+        - *dark
+        - *anchor
+    - label: "Video + text"
+      name: video
+      widget: object
+      fields: [ { label: "Video file (.mp4)", name: video, widget: file }, { label: "Cover image", name: poster, widget: image }, *eyebrow, *heading, *text, *bg, *bgimg, *dark, *anchor ]
+    - label: "Map"
+      name: map
+      widget: object
+      fields: [ *eyebrow, *heading, *intro, *text, { label: "Layout", name: layout, widget: select, required: false, options: [ { label: "Heading centred", value: "" }, { label: "Heading left, text right", value: split } ] }, *bg, *bgimg, *dark, *anchor ]
+    - label: "Photo gallery"
+      name: gallery
+      widget: object
+      fields: [ *eyebrow, *heading, *divider, *text, *button, { label: "Photos", name: images, widget: list, field: { label: "Photo", name: image, widget: image } }, *bg, *bgimg, *dark, *anchor ]
+    - label: "Contact form"
+      name: contact
+      widget: object
+      fields: [ { label: "Form heading", name: form_heading, widget: string, required: false }, { label: "Form text", name: form_text, widget: markdown, required: false, buttons: [bold, italic, link, bulleted-list] }, { label: "Text under phone number", name: call_text, widget: string, required: false }, *bg, *bgimg, *dark, *anchor ]
+    - label: "Captains (choose card style)"
+      name: captains_cards
+      widget: object
+      fields: [ *eyebrow, *heading, *divider, { label: "Card style", name: style, widget: select, required: false, options: [blue, plain, white] }, *button, *bg, *bgimg, *dark, *anchor ]
+    - label: "Stacked text + photo boxes"
+      name: stack
+      widget: object
+      fields: [ *eyebrow, *heading, *divider, *intro, { label: "Alternate photo sides", name: alternate, widget: boolean, required: false, default: false },
+        { label: "Boxes", name: items, widget: list, summary: "{{fields.title}}", fields: [ { label: "Title", name: title, widget: string }, { label: "Text", name: text, widget: markdown, buttons: [bold, italic, link] }, { label: "Photo", name: image, widget: image }, { label: "Photo description", name: alt, widget: string, required: false } ] },
+        *button, *bg, *bgimg, *dark, *anchor ]
+    - label: "Season labels with text + photo"
+      name: season_links
+      widget: object
+      fields: [ *eyebrow, *heading, *divider, *text,
+        { label: "Seasons", name: items, widget: list, summary: "{{fields.label}}", fields: [ { label: "Season colour", name: season, widget: select, options: [winter, spring, summer, fall] }, { label: "Label", name: label, widget: string }, { label: "Text", name: text, widget: string }, { label: "Link", name: link, widget: string, required: false } ] },
+        { label: "Photo", name: image, widget: image, required: false }, { label: "Photo description", name: image_alt, widget: string, required: false },
+        { label: "Note under", name: outro, widget: markdown, required: false, buttons: [bold, italic, link] }, *bg, *bgimg, *dark, *anchor ]
+    - label: "Rates card over photo (prices from Settings → Trips & Prices)"
+      name: rates_card
+      widget: object
+      fields: [ *eyebrow, *heading, *divider, { label: "Text under prices", name: text, widget: markdown, required: false, buttons: [bold, italic, link] }, { label: "Card side", name: card_side, widget: select, required: false, options: [left, right] }, { label: "Layout", name: layout, widget: select, required: false, options: [ { label: "Card over photo", value: card }, { label: "Normal", value: "" } ] }, *button, *bg, *bgimg, *dark, *anchor ]
+    - label: "Short note"
+      name: note
+      widget: object
+      fields: [ { label: "Title", name: title, widget: string, required: false }, *text, *button, { label: "Less spacing", name: tight, widget: boolean, required: false, default: false }, *bg, *bgimg, *dark, *anchor ]
+    - label: "Season buttons"
+      name: season_pills
+      widget: object
+      fields: [ { label: "Buttons", name: items, widget: list, summary: "{{fields.label}}", fields: [ { label: "Label", name: label, widget: string }, { label: "Link", name: url, widget: string }, { label: "Season colour", name: season, widget: select, options: [winter, spring, summer, fall] } ] }, *bg, *bgimg, *dark, *anchor ]
+
+x-hero: &hero
+  label: "Top banner"
+  name: hero
+  widget: object
+  collapsed: true
+  fields:
+    - { label: "Big title (wrap words in *stars* to make them blue)", name: title, widget: string, required: false }
+    - { label: "Small label under title", name: eyebrow, widget: string, required: false }
+    - { label: "Line under title", name: subtitle, widget: string, required: false }
+    - { label: "Background photo", name: image, widget: image }
+    - { label: "Background video (home page only)", name: video, widget: file, required: false }
+    - { label: "Background video for phones", name: video_mobile, widget: file, required: false }
+    - *button
+
+x-seo: &seo
+  - { label: "Page name", name: title, widget: string }
+  - { label: "Google title (optional)", name: seo_title, widget: string, required: false, hint: "Shown in Google results. About 50–60 characters." }
+  - { label: "Google description", name: description, widget: text, hint: "Shown under the title in Google. About 140–155 characters." }
+
+collections:
+  - name: reports
+    label: "Fishing Reports"
+    label_singular: "Fishing Report"
+    folder: src/posts
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    sortable_fields: [date, title]
+    view_filters: []
+    summary: "{{title}} — {{date | date('MMM D, YYYY')}}"
+    fields:
+      - { label: "Title", name: title, widget: string }
+      - { label: "Date", name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ss", date_format: "MMM D, YYYY", time_format: false }
+      - { label: "Main photo", name: image, widget: image }
+      - { label: "Short summary (shown on report cards)", name: excerpt, widget: text, required: false }
+      - { label: "Google description", name: description, widget: text, required: false, hint: "About 140–155 characters. Leave empty to use the summary." }
+      - { label: "Web address", name: permalink, widget: hidden, required: false }
+      - { label: "Categories", name: categories, widget: hidden, required: false }
+      - { label: "Report", name: body, widget: markdown, buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list], editor_components: [image] }
+
+  - name: pages
+    label: "Pages"
+    folder: src/pages
+    create: false
+    delete: false
+    extension: md
+    format: frontmatter
+    summary: "{{title}}"
+    fields:
+      - { label: "Page name", name: title, widget: string }
+      - { label: "Google title (optional)", name: seo_title, widget: string, required: false, hint: "Shown in Google results. About 50–60 characters." }
+      - { label: "Google description", name: description, widget: text, hint: "About 140–155 characters." }
+      - { label: "Web address (do not change)", name: permalink, widget: hidden }
+      - *hero
+      - *sections
+
+  - name: settings
+    label: "Settings"
+    editor: { preview: false }
+    files:
+      - name: trips
+        label: "Trips & Prices"
+        file: src/_data/trips.json
+        fields:
+          - { label: "Trips", name: trips, widget: list, summary: "{{fields.name}} — {{fields.price}}", fields: [
+              { label: "Trip name", name: name, widget: string },
+              { label: "Short name (rates tables & form)", name: short, widget: string },
+              { label: "Price (e.g. $700)", name: price, widget: string },
+              { label: "Description", name: text, widget: text },
+              { label: "Photo", name: image, widget: image } ] }
+          - { label: "Capacity", name: capacity, widget: string }
+          - { label: "Fishing license", name: license, widget: string }
+          - { label: "Included", name: included, widget: string }
+          - { label: "Boat", name: boat, widget: string }
+      - name: captains
+        label: "Captains"
+        file: src/_data/captains.json
+        fields:
+          - { label: "Captains", name: captains, widget: list, summary: "{{fields.name}}", fields: [
+              { label: "Name", name: name, widget: string }, { label: "Bio", name: bio, widget: text },
+              { label: "Photo", name: image, widget: image }, { label: "Photo description", name: alt, widget: string } ] }
+      - name: reviews
+        label: "Reviews"
+        file: src/_data/reviews.json
+        fields:
+          - { label: "Average rating", name: rating, widget: string }
+          - { label: "Total number of reviews", name: count, widget: number }
+          - { label: "Google 'write a review' link", name: google_review_url, widget: string }
+          - { label: "Tripadvisor 'write a review' link", name: tripadvisor_review_url, widget: string }
+          - { label: "Reviews shown on the site", name: reviews, widget: list, summary: "{{fields.name}} ({{fields.platform}})", fields: [
+              { label: "Name", name: name, widget: string }, { label: "Date", name: date, widget: string },
+              { label: "Platform", name: platform, widget: select, options: [Google, Tripadvisor] }, { label: "Review", name: text, widget: text } ] }
+      - name: site
+        label: "Phone, Email, Booking & Menu"
+        file: src/_data/site.json
+        fields:
+          - { label: "Business name", name: name, widget: string }
+          - { label: "Short name", name: short_name, widget: string }
+          - { label: "Website address", name: url, widget: hidden }
+          - { label: "Phone (as shown)", name: phone, widget: string }
+          - { label: "Phone link (tel:+1 and digits only)", name: phone_link, widget: string }
+          - { label: "Email", name: email, widget: string }
+          - { label: "Address line (footer)", name: address_line, widget: string }
+          - { label: "Street", name: street, widget: string }
+          - { label: "City", name: city, widget: string }
+          - { label: "State", name: region, widget: string }
+          - { label: "ZIP", name: postal, widget: string }
+          - { label: "Google Maps link", name: map_link, widget: string }
+          - { label: "Google Maps embed link", name: map_embed, widget: string }
+          - { label: "Instagram", name: instagram, widget: string }
+          - { label: "FareHarbor booking link (used by every Book Now button)", name: booking_url, widget: string }
+          - { label: "Footer text", name: footer_blurb, widget: text }
+          - { label: "Copyright line", name: copyright, widget: string }
+          - { label: "Default share image", name: default_image, widget: image }
+          - { label: "Tracking (do not change)", name: tracking, widget: object, collapsed: true, fields: [ { label: "Google Tag Manager ID", name: gtm, widget: string }, { label: "Google tag ID", name: google_tag, widget: string } ] }
+          - { label: "Main menu", name: nav, widget: list, summary: "{{fields.label}}", fields: [
+              { label: "Label", name: label, widget: string }, { label: "Link", name: url, widget: string },
+              { label: "Drop-down items", name: children, widget: list, required: false, summary: "{{fields.label}}", fields: [ { label: "Label", name: label, widget: string }, { label: "Link", name: url, widget: string } ] } ] }
+          - { label: "Footer links", name: footer_links, widget: list, summary: "{{fields.label}}", fields: [ { label: "Label", name: label, widget: string }, { label: "Link", name: url, widget: string } ] }

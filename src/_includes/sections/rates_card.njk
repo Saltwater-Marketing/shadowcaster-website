@@ -1,0 +1,8 @@
+{#- helper A: white torn card over a photo with the rates table (prices from trips.json) -#}
+<div class="card-over rates-card{{ ' rates-card--right' if s.card_side == 'right' }}">
+  {%- set s0 = s %}{% set s = { eyebrow: s0.eyebrow, heading: s0.heading, align: 'left', divider: s0.divider } %}{% include "sechead.njk" %}{% set s = s0 %}
+  <table class="rates-card__tbl"><thead><tr><th scope="col">Trip Length</th><th scope="col">Rate</th></tr></thead>
+  <tbody>{% for t in trips.trips %}<tr><td>{{ t.short }}</td><td>{{ t.price }}</td></tr>{% endfor %}</tbody></table>
+  {%- if s.text %}<div class="body center" style="margin-top:22px">{{ s.text | md | safe }}</div>{% endif %}
+  {%- if s.button and s.button.label %}<div class="btn-row center" style="margin-top:18px">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}
+</div>

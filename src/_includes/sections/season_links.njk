@@ -1,0 +1,14 @@
+{#- helper A: coloured season labels each with a short line, photo alongside -#}
+<div class="split">
+  <div class="split__body">
+    {%- set s0 = s %}{% set s = { eyebrow: s0.eyebrow, heading: s0.heading, align: 'left', divider: s0.divider } %}{% include "sechead.njk" %}{% set s = s0 %}
+    {%- if s.text %}<div class="body">{{ s.text | md | safe }}</div>{% endif %}
+    <div class="season-links">
+    {%- for c in s.items %}
+      <div class="season-links__row"><a class="season-tag season-tag--{{ c.season }}" href="{{ c.link }}">{{ c.label }}</a><p>{{ c.text }}</p></div>
+    {%- endfor %}
+    </div>
+    {%- if s.outro %}<div class="season-links__outro">{{ s.outro | md | safe }}</div>{% endif %}
+  </div>
+  <div class="split__media">{% set i = { src: s.image, alt: s.image_alt } %}{% include "img.njk" %}</div>
+</div>

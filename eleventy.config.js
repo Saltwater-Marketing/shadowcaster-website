@@ -19,6 +19,11 @@ function imageSize(file) {
   return null;
 }
 
+// Photos the client uploads through the editor (src/images/uploads) are resized and converted
+// to WebP/AVIF on the fly by Netlify's image service, so a 6 MB phone photo never slows the site.
+const cdn = (src, w = 1200) =>
+  process.env.NETLIFY && src.startsWith("/images/uploads/") ? `/.netlify/images?url=${encodeURIComponent(src)}&w=${w}&q=75` : src;
+
 module.exports = function (eleventyConfig) {
   ["src/images", "src/fonts", "src/video", "src/assets", "src/admin", "src/favicon.png", "src/favicon-32.png", "src/robots.txt", "src/_redirects"].forEach(p =>
     eleventyConfig.addPassthroughCopy(p));
@@ -51,8 +56,8 @@ module.exports = function (eleventyConfig) {
       let attrs = a + b;
       if (!/\bwidth=/.test(attrs)) { const sz = imageSize(path.join("src", src)); if (sz) attrs += ` width="${sz.w}" height="${sz.h}"`; }
       if (!/loading=|fetchpriority=/.test(attrs)) attrs += ' loading="lazy" decoding="async"';
-      return `<img ${attrs.trim()} src="${src}">`.replace(/\s+/g, " ").replace(" src=", " src=");
-    });
+      return `<img ${attrs.trim()} src="${cdn(src)}">`.replace(/\s+/g, " ");
+    }).replace(/url\('(\/images\/uploads\/[^']+)'\)/g, (m, src) => `url('${cdn(src, 1920)}')`);
   });
 
   eleventyConfig.addCollection("posts", api => api.getFilteredByGlob("src/posts/*.md").sort((a, b) => b.date - a.date));

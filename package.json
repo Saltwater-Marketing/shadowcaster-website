@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "build": "eleventy",
-    "start": "eleventy --serve"
+    "start": "eleventy --serve",
+    "check": "python3 scripts/check-cms-fields.py"
   },
   "keywords": [],
   "author": "",
