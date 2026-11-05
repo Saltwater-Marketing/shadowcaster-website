@@ -248,7 +248,7 @@ h1{font-size:var(--h1)} h2{font-size:var(--h2)} h3{font-size:var(--h3)} h4{font-
 .rates__box table{width:100%;border-collapse:separate;border-spacing:0 6px}
 .rates__box th{font:800 26px/1 var(--head);text-align:left;padding:8px 22px 12px;text-transform:capitalize}
 .rates__box td{padding:12px 22px;font-size:15px;font-weight:600}
-.rates__box tr:nth-child(odd) td{background:rgba(255,255,255,.35)}
+.rates__box tr:nth-child(odd) td{background:rgba(0,30,70,.32)}
 .rates__side h3{font-size:var(--h4)}
 .rates__side p{line-height:1.6;margin-bottom:14px}
 .rates__side b{font:800 22px/1 var(--head);color:var(--navy);text-transform:capitalize}
