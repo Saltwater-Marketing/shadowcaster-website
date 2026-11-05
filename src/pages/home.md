@@ -8,7 +8,6 @@ hero:
   subtitle: Guided light tackle trips across the shallow waters surrounding Key West.
   image: /images/hero-poster.webp
   video: /video/hero.mp4
-  video_mobile: /video/hero-mobile.mp4
   button: { label: Book Now }
 sections:
   - type: trips

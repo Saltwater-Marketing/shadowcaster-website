@@ -457,3 +457,7 @@ h1{font-size:var(--h1)} h2{font-size:var(--h2)} h3{font-size:var(--h3)} h4{font-
 .contact-direct .ico-phone{width:24px;height:24px;color:var(--blue);flex:none}
 #thanks{padding-top:220px}
 @media (max-width:767px){#thanks{padding-top:150px}.contact-direct a{font-size:26px}}
+
+/* Speed: section/footer background images only download when the section is about to scroll into view
+   (site.js adds .bg-on). Without JavaScript everything shows normally. */
+.js .lazy-bg:not(.bg-on),.js .lazy-bg:not(.bg-on) *{background-image:none!important}

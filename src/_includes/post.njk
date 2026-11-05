@@ -3,7 +3,7 @@ layout: base.njk
 ---
 {%- from "icons.njk" import arrow -%}
 <section class="post-hero"><h1>{{ title }}</h1><time datetime="{{ page.date | date_iso }}">{{ page.date | date_long }}</time></section>
-<section class="sec"><div class="wrap post-layout">
+<section class="sec lazy-bg"><div class="wrap post-layout">
   <article class="post-body">
     {%- if image %}<img src="{{ image }}" alt="{{ title }}" fetchpriority="high">{% endif %}
     {{ content | safe }}
