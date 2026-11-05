@@ -1,4 +1,6 @@
 User-agent: *
 Disallow: /admin/
 
+# Guide to this site for AI assistants: https://keysflatsfishing.com/llms.txt
+
 Sitemap: https://keysflatsfishing.com/sitemap.xml

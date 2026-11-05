@@ -20,7 +20,7 @@ hero:
     <article class="post-card">
       <div class="post-card__img"><a href="{{ p.url }}" tabindex="-1" aria-hidden="true"><img src="{{ p.data.image }}" alt="{{ p.data.title }}"></a></div>
       <div class="post-card__body"><h3><a href="{{ p.url }}">{{ p.data.title }}</a></h3><p>{{ p.data.excerpt | excerpt(150) }}</p>
-      <a class="btn btn--sm" href="{{ p.url }}"><span>Read More</span>{{ arrow() | safe }}</a></div>
+      <a class="btn btn--sm" href="{{ p.url }}"><span>Read More<span class="sr-only"> about {{ p.data.title }}</span></span>{{ arrow() | safe }}</a></div>
     </article>
   {%- endfor %}
   </div>

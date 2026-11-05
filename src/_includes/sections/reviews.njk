@@ -2,12 +2,12 @@
 <div class="center"><div class="stars" aria-hidden="true" style="margin-bottom:14px">{% for n in range(5) %}{{ star() | safe }}{% endfor %}</div></div>
 {% include "sechead.njk" %}
 <div data-reviews>
-  <p class="reviews__summary"><span>Excellent</span><span class="stars" aria-label="{{ reviews.rating }} out of 5 stars">{% for n in range(5) %}{{ star() | safe }}{% endfor %}</span><span>{{ reviews.rating }} · {{ reviews.count }} reviews on Google &amp; Tripadvisor</span></p>
-  <div class="reviews__track" tabindex="0" aria-label="Customer reviews">
+  <p class="reviews__summary"><span>Excellent</span><span class="stars" role="img" aria-label="{{ reviews.rating }} out of 5 stars">{% for n in range(5) %}{{ star() | safe }}{% endfor %}</span><span>{{ reviews.rating }} · {{ reviews.count }} reviews on Google &amp; Tripadvisor</span></p>
+  <div class="reviews__track" tabindex="0" role="region" aria-label="Customer reviews">
   {%- for r in reviews.reviews %}
     <article class="review">
       <div class="review__top"><div><div class="review__name">{{ r.name }}</div><div class="review__date">{{ r.date }}</div></div><span class="review__src">{{ r.platform }}</span></div>
-      <div class="stars" aria-label="5 stars">{% for n in range(5) %}{{ star() | safe }}{% endfor %}</div>
+      <div class="stars" role="img" aria-label="5 stars">{% for n in range(5) %}{{ star() | safe }}{% endfor %}</div>
       <p class="review__text">{{ r.text }}</p><button class="review__more" type="button">Read more</button>
     </article>
   {%- endfor %}
