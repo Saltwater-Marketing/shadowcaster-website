@@ -2,34 +2,33 @@
 permalink: /llms.txt
 eleventyExcludeFromCollections: true
 ---
-{% autoescape false %}# {{ site.name }}
+# {{ (site.name) | safe }}
 
-> Guided light-tackle inshore, backcountry and flats fishing charters in Key West, Florida, with Captain John Smouse and Captain Travis. Over 20 years guiding the Key West backcountry for tarpon, permit, barracuda, sharks, snapper, jacks and more. Trips run year-round for 1–4 anglers from {{ site.address_line | replace(" • ", ", ") }}, Key West, FL.
+> Guided light-tackle inshore, backcountry and flats fishing charters in Key West, Florida, with Captain John Smouse and Captain Travis. Over 20 years guiding the Key West backcountry for tarpon, permit, barracuda, sharks, snapper, jacks and more. Trips run year-round for 1–4 anglers from {{ (site.address_line | replace(" • ", ", ")) | safe }}, Key West, FL.
 
-- Phone: {{ site.phone }}
-- Email: {{ site.email }}
-- Book online: {{ site.booking_url }}
-- Departure: {{ site.street }}, {{ site.city }}, {{ site.region }} {{ site.postal }} ({{ site.map_link }})
+- Phone: {{ (site.phone) | safe }}
+- Email: {{ (site.email) | safe }}
+- Book online: {{ (site.booking_url) | safe }}
+- Departure: {{ (site.street) | safe }}, {{ (site.city) | safe }}, {{ (site.region) | safe }} {{ (site.postal) | safe }} ({{ (site.map_link) | safe }})
 
 ## Trips and rates
 
 {% for t in trips.trips -%}
-- {{ t.name }}: {{ t.price }}. {{ t.text }}
+- {{ (t.name) | safe }}: {{ (t.price) | safe }}. {{ (t.text) | safe }}
 {% endfor -%}
-- Capacity: {{ trips.capacity }}
-- Included: {{ trips.included }}
-- Fishing license: {{ trips.license }}
-- Boat: {{ trips.boat }}
+- Capacity: {{ (trips.capacity) | safe }}
+- Included: {{ (trips.included) | safe }}
+- Fishing license: {{ (trips.license) | safe }}
+- Boat: {{ (trips.boat) | safe }}
 
 ## Key pages
 
 {% for p in collections.all %}{% if p.inputPath.includes('/pages/') and not p.data.noindex -%}
-- [{{ p.data.title | plain }}]({{ site.url }}{{ p.url }}): {{ p.data.description }}
+- [{{ (p.data.title | plain) | safe }}]({{ (site.url) | safe }}{{ (p.url) | safe }}): {{ (p.data.description) | safe }}
 {% endif %}{% endfor %}
 ## Recent fishing reports
 
 {% for p in collections.posts | limit(10) -%}
-- [{{ p.data.title }}]({{ site.url }}{{ p.url }}) ({{ p.date | date_long }}): {{ p.data.excerpt | excerpt(160) }}
+- [{{ (p.data.title) | safe }}]({{ (site.url) | safe }}{{ (p.url) | safe }}) ({{ (p.date | date_long) | safe }}): {{ (p.data.excerpt | excerpt(160)) | safe }}
 {% endfor -%}
-- [All fishing reports]({{ site.url }}/fishing-reports/)
-{% endautoescape %}
+- [All fishing reports]({{ (site.url) | safe }}/fishing-reports/)
