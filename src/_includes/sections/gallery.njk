@@ -1,0 +1,4 @@
+{% include "sechead.njk" %}
+{%- if s.text %}<div class="center" style="max-width:820px;margin:0 auto">{{ s.text | md | safe }}</div>{% endif %}
+{%- if s.button and s.button.label %}<div class="btn-row center">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}
+<div class="gallery-grid">{% for g in s.images %}{% set i = { src: g.image or g, alt: g.alt or 'Key West fishing charter photo' } %}{% include "img.njk" %}{% endfor %}</div>

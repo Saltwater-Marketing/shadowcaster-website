@@ -1,0 +1,6 @@
+{% include "sechead.njk" %}
+<div class="tbl-wrap"><table class="tbl{{ ' tbl--center' if s.center_cells }}">
+<thead><tr>{% for c in s.columns %}<th scope="col">{{ c }}</th>{% endfor %}</tr></thead>
+<tbody>{% for r in s.rows %}<tr>{% for c in r.cells %}<td>{{ c | mdi | safe }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+</table></div>
+{%- if s.outro %}<div class="outro">{{ s.outro | md | safe }}</div>{% endif %}

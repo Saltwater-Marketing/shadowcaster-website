@@ -1,0 +1,17 @@
+{
+  "name": "keysflatsfishing",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
+    "markdown-it": "^14.3.3"
+  },
+  "private": true
+}

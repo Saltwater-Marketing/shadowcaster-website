@@ -1,0 +1,18 @@
+{%- from "icons.njk" import check, arrow -%}
+{% include "sechead.njk" %}
+{%- set st = s.style or 'white' -%}
+<div class="cards cards--{{ st }}{{ ' cards--' + s.align if s.align == 'left' }}" style="--cols:{{ s.columns or 3 }}{% if s.ratio %};--ratio:{{ s.ratio }}{% endif %}">
+{%- for c in s.items %}
+  <div class="card{{ ' card--hl' if c.highlight }}{{ ' card--dark' if c.dark }}"{% if c.bg_image %} style="background-image:url('{{ c.bg_image }}')"{% endif %}>
+    {%- if st == 'check' %}{% if not c.highlight %}{{ check() | safe }}{% endif %}{% endif %}
+    {%- if c.image %}<div class="card__img">{% if c.link %}<a href="{{ c.link }}" tabindex="-1" aria-hidden="true">{% endif %}{% set i = { src: c.image, alt: c.alt or c.title } %}{% include "img.njk" %}{% if c.link %}</a>{% endif %}</div>{% endif %}
+    <div class="card__body">
+      {%- if c.title %}<h3>{% if c.link %}<a href="{{ c.link }}">{{ c.title }}</a>{% else %}{{ c.title }}{% endif %}</h3>{% endif %}
+      {%- if c.text %}<div class="card__text">{{ c.text | md | safe }}</div>{% endif %}
+      {%- if c.button_label %}<div class="btn-row">{% set b = { label: c.button_label, url: c.link, style: 'sm' } %}{% include "button.njk" %}</div>{% endif %}
+    </div>
+  </div>
+{%- endfor %}
+</div>
+{%- if s.outro %}<div class="outro">{{ s.outro | md | safe }}</div>{% endif %}
+{%- if s.button and s.button.label %}<div class="btn-row center">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}

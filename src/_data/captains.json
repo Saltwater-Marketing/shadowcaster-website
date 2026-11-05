@@ -1,0 +1,8 @@
+{
+  "captains": [
+    { "name": "Captain Travis", "image": "/images/image-21-2.webp", "alt": "Travis Charter Captain at ShadowCaster Flats Fishing",
+      "bio": "South Florida native with extensive shallow-water experience. Known for reading weather and tide patterns and selecting the best locations for the conditions." },
+    { "name": "Captain John", "image": "/images/image-22-2.webp", "alt": "John Charter captain and owner of ShadowCaster Flats Fishing holding a permit",
+      "bio": "Over 20 years of guiding in the Key West inshore fishery. Highly experienced during Tarpon season and skilled at helping anglers understand how daily conditions shape the bite." }
+  ]
+}

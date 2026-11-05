@@ -1,0 +1,26 @@
+{%- from "icons.njk" import phone, send, arrow -%}
+<div class="contact-grid">
+  <div class="form-card">
+    <h2>{{ s.form_heading or 'Message Us' }}</h2>
+    {{ s.form_text | md | safe }}
+    <form name="contact" method="POST" action="/thank-you/" data-netlify="true" netlify-honeypot="company">
+      <input type="hidden" name="form-name" value="contact">
+      <p class="sr-only"><label>Leave this empty <input name="company"></label></p>
+      <label class="sr-only" for="f-name">Full Name</label><input id="f-name" name="name" placeholder="Full Name" required autocomplete="name">
+      <label class="sr-only" for="f-email">Email</label><input id="f-email" type="email" name="email" placeholder="Email" required autocomplete="email">
+      <label class="sr-only" for="f-dates">Preferred date(s)</label><input id="f-dates" name="dates" placeholder="Preferred date(s)">
+      <label class="sr-only" for="f-anglers">Number of anglers</label><input id="f-anglers" name="anglers" placeholder="Number of anglers">
+      <label class="sr-only" for="f-length">Desired trip length</label>
+      <select id="f-length" name="trip_length"><option value="">Desired trip length</option>{% for t in trips.trips %}<option>{{ t.short }}</option>{% endfor %}</select>
+      <label class="sr-only" for="f-notes">Notes</label><textarea id="f-notes" name="notes" placeholder="Notes"></textarea>
+      <button class="btn btn--sm" type="submit"><span>Send Now</span>{{ arrow() | safe }}</button>
+    </form>
+  </div>
+  <div class="contact-direct">
+    <h2>Call or Text</h2>
+    <a href="{{ site.phone_link }}">{{ phone() | safe }}{{ site.phone | replace('(', '') | replace(') ', '-') }}</a>
+    <p>{{ s.call_text or 'Fastest for same-day questions or last-minute openings.' }}</p>
+    <h2>Email</h2>
+    <a href="mailto:{{ site.email }}" style="font:600 15px var(--sans)">{{ send() | safe }}{{ site.email }}</a>
+  </div>
+</div>

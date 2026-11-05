@@ -1,0 +1,4 @@
+{%- if s.layout == 'split' -%}
+<div class="lead-row">{% set s0 = s %}{% set s = { eyebrow: s0.eyebrow, heading: s0.heading, align: 'left' } %}<div>{% include "sechead.njk" %}</div>{% set s = s0 %}<div>{{ s.text | md | safe }}</div></div>
+{%- else -%}{% include "sechead.njk" %}{%- endif %}
+<div class="map-frame"><iframe src="{{ site.map_embed }}" loading="lazy" title="Map to {{ site.address_line }}" referrerpolicy="no-referrer-when-downgrade"></iframe></div>

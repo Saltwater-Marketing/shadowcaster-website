@@ -1,0 +1,7 @@
+<div class="split split--img-left split--video">
+  <div class="split__media"><div class="video-frame"><video controls preload="none" playsinline poster="{{ s.poster }}" width="540" height="960"><source src="{{ s.video }}" type="video/mp4"></video></div></div>
+  <div class="split__body">
+    {%- set s0 = s %}{% set s = { eyebrow: s0.eyebrow, heading: s0.heading, align: 'left', divider: false } %}{% include "sechead.njk" %}{% set s = s0 %}
+    <div class="body">{{ s.text | md | safe }}</div>
+  </div>
+</div>

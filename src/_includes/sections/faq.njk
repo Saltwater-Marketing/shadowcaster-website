@@ -1,0 +1,6 @@
+{% include "sechead.njk" %}
+<div class="faq">
+{%- for f in s.items %}
+  <details{% if loop.first %} open{% endif %}><summary>{{ f.q }}</summary><div class="faq__a">{{ f.a | md | safe }}</div></details>
+{%- endfor %}
+</div>

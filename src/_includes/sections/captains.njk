@@ -1,0 +1,8 @@
+{% include "sechead.njk" %}
+<div class="cards cards--plain" style="--cols:2">
+{%- for c in captains.captains %}
+  <div class="card"><div class="card__img">{% set i = { src: c.image, alt: c.alt } %}{% include "img.njk" %}</div>
+  <div class="card__body"><h3>{{ c.name }}</h3><div class="card__text"><p>{{ c.bio }}</p></div></div></div>
+{%- endfor %}
+</div>
+{%- if s.button and s.button.label %}<div class="btn-row center">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}

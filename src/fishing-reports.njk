@@ -1,0 +1,34 @@
+---
+layout: page.njk
+title: Fishing *Reports*
+seo_title: Key West Fishing Reports | Key West Flats Fishing
+description: Current Key West fishing reports from ShadowCaster — what's biting, changing weather patterns and what to expect on the flats and in the Backcountry.
+pagination:
+  data: collections.posts
+  size: 9
+  alias: plist
+permalink: "/fishing-reports/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1 }}/{% endif %}"
+hero:
+  image: /images/mask-group-121.webp
+---
+{%- from "icons.njk" import arrow -%}
+<section class="sec"><div class="wrap">
+  <div class="sechead center"><span class="eyebrow">Fishing Reports</span><h2>Recent Fishing Reports From Key West</h2><span class="divider"></span>
+  <div class="intro"><p>Stay up to date with current fishing conditions in Key West. These reports highlight recent catches, changing weather patterns, and what anglers can expect across the flats and backcountry throughout the season.</p></div></div>
+  <div class="post-grid">
+  {%- for p in plist %}
+    <article class="post-card">
+      <div class="post-card__img"><a href="{{ p.url }}" tabindex="-1" aria-hidden="true"><img src="{{ p.data.image }}" alt="{{ p.data.title }}"></a></div>
+      <div class="post-card__body"><h3><a href="{{ p.url }}">{{ p.data.title }}</a></h3><p>{{ p.data.excerpt | excerpt(150) }}</p>
+      <a class="btn btn--sm" href="{{ p.url }}"><span>Read More</span>{{ arrow() | safe }}</a></div>
+    </article>
+  {%- endfor %}
+  </div>
+  {%- if pagination.pages.length > 1 %}
+  <nav class="pager" aria-label="Report pages">
+  {%- for h in pagination.hrefs %}{% if loop.index0 == pagination.pageNumber %}<span aria-current="page">{{ loop.index }}</span>{% else %}<a href="{{ h }}">{{ loop.index }}</a>{% endif %}{% endfor %}
+  </nav>
+  {%- endif %}
+</div></section>
+{%- set s = { type: 'text', bg: 'sky', eyebrow: 'get started', heading: 'Plan Your Trip With ShadowCaster', divider: false, text: 'Whether you want steady mixed-species action, a calm day exploring the Backcountry, or a chance at tarpon during the migration, our captains will guide you through the best opportunities the season offers.', button: { label: 'Book a Key West Flats Fishing Charter' } } %}
+{% include "section.njk" %}

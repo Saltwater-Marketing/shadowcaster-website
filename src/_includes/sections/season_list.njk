@@ -1,0 +1,11 @@
+{% include "sechead.njk" %}
+<div class="season-list">
+{%- for c in s.items %}
+  <div class="season-item">
+    <span class="season-tag season-tag--{{ c.season }}">{{ c.label }}</span>
+    <div><h3>{{ c.title }}</h3>{{ c.text | md | safe }}</div>
+    <div class="season-item__media">{% set i = { src: c.image, alt: c.alt or c.title } %}{% include "img.njk" %}
+    {%- if c.link %}{% set b = { label: 'Learn More', url: c.link } %}{% include "button.njk" %}{% endif %}</div>
+  </div>
+{%- endfor %}
+</div>

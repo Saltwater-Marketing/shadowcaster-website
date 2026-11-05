@@ -1,0 +1,16 @@
+{%- set s0 = s %}{% set s = { eyebrow: s0.eyebrow, heading: s0.heading } %}{% include "sechead.njk" %}{% set s = s0 %}
+<div class="rates">
+  <div class="rates__box">
+    <table><thead><tr><th scope="col">Trip Length</th><th scope="col">Rate</th></tr></thead>
+    <tbody>{% for t in trips.trips %}<tr><td>{{ t.short }}</td><td>{{ t.price }}</td></tr>{% endfor %}</tbody></table>
+    {%- if s.box_note %}<p class="center" style="margin:18px 0 0;font-size:14px;font-weight:600">{{ s.box_note }}</p>{% endif %}
+  </div>
+  <div class="rates__side">
+    {%- if s.image %}<div class="rates__img">{% set i = { src: s.image, alt: s.image_alt } %}{% include "img.njk" %}</div>
+    {%- else %}
+    {%- if s.side_heading %}<h3>{{ s.side_heading }}</h3>{% endif %}
+    {%- if s.side %}{{ s.side | md | safe }}{% endif %}
+    {%- if s.button and s.button.label %}<div class="btn-row" style="margin-top:24px">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}
+    {%- endif %}
+  </div>
+</div>

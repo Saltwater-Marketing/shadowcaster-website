@@ -1,0 +1,22 @@
+{%- from "icons.njk" import arrow, cal -%}
+{%- set posts = collections.posts | limit(s.count or 3) -%}
+<div class="lead-row">
+  {%- set s0 = s %}{% set s = { eyebrow: s0.eyebrow, heading: s0.heading, align: 'left', divider: false } %}<div>{% include "sechead.njk" %}{% set s = s0 %}
+  {%- if s.button and s.button.label %}<div class="btn-row" style="margin-top:20px">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}</div>
+  <div>{{ s.text | md | safe }}</div>
+</div>
+<div class="posts-feature">
+  {%- set p = posts[0] %}
+  <div class="post-big" style="background-image:url('{{ p.data.image }}')">
+    <span class="post-date">{{ cal() | safe }}{{ p.date | date_long }}</span>
+    <div class="post-card__body"><h3><a href="{{ p.url }}">{{ p.data.title }}</a></h3><p>{{ p.data.excerpt or (p.content | excerpt(200)) }}</p><a class="textlink" href="{{ p.url }}">Read More {{ arrow() | safe }}</a></div>
+  </div>
+  <div class="posts-small">
+  {%- for p in posts | limit(3) %}{% if not loop.first %}
+    <article class="post-card">
+      <div class="post-card__img">{% set i = { src: p.data.image, alt: p.data.title } %}{% include "img.njk" %}<span class="post-date">{{ cal() | safe }}{{ p.date | date_long }}</span></div>
+      <div class="post-card__body"><h3><a href="{{ p.url }}">{{ p.data.title }}</a></h3><p>{{ p.data.excerpt or (p.content | excerpt(160)) }}</p><a class="textlink" href="{{ p.url }}">Read More {{ arrow() | safe }}</a></div>
+    </article>
+  {%- endif %}{% endfor %}
+  </div>
+</div>

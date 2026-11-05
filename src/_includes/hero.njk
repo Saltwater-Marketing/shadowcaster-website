@@ -1,0 +1,15 @@
+{%- set h = hero -%}
+<section class="hero{{ ' hero--home' if h.video }}">
+  {%- if h.video %}
+  <video class="hero__media" data-lazy-hero muted loop playsinline preload="none" poster="{{ h.image }}" data-src="{{ h.video }}" data-src-mobile="{{ h.video_mobile or h.video }}" aria-hidden="true"></video>
+  {%- else %}
+  {%- set sz = h.image | imgsize %}
+  <img class="hero__media" src="{{ h.image }}" alt="" {% if sz %}width="{{ sz.w }}" height="{{ sz.h }}"{% endif %} fetchpriority="high" style="object-position:{{ h.position or 'center' }}">
+  {%- endif %}
+  <div class="hero__inner">
+    <h1>{{ (h.title or title) | accent | safe }}</h1>
+    {%- if h.eyebrow %}<span class="hero__eyebrow">{{ h.eyebrow }}</span>{% endif %}
+    {%- if h.subtitle %}<p class="hero__sub">{{ h.subtitle }}</p>{% endif %}
+    {%- if h.button and h.button.label %}<div class="btn-row">{% set b = h.button %}{% include "button.njk" %}</div>{% endif %}
+  </div>
+</section>

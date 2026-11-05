@@ -1,0 +1,8 @@
+---
+layout: base.njk
+---
+{%- if hero %}{% include "hero.njk" %}{% endif %}
+{%- for s in sections %}
+{% include "section.njk" %}
+{%- endfor %}
+{{ content | safe }}

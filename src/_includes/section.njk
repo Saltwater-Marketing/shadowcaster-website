@@ -1,0 +1,7 @@
+{#- Wraps every section: background + optional anchor id -#}
+{%- set bg = s.bg or 'paper' -%}
+<section class="sec sec--{{ bg }}{{ ' sec--dark' if s.dark }}{{ ' sec--card-photo' if s.layout == 'card' }}{{ ' sec--tight' if s.tight }}"{% if s.id %} id="{{ s.id }}"{% endif %}{% if s.bg_image %} style="background-image:url('{{ s.bg_image }}')"{% endif %}>
+<div class="wrap">
+{% include "sections/" + s.type + ".njk" %}
+</div>
+</section>

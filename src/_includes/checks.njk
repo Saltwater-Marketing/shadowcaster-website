@@ -1,0 +1,4 @@
+{%- from "icons.njk" import check -%}
+{%- if list and list.length -%}
+<ul class="checks">{% for c in list %}<li>{{ check() | safe }}<div>{% if c.title %}<span class="ct">{{ c.title }}</span>{% endif %}{% if c.text %}{{ c.text | mdi | safe }}{% endif %}</div></li>{% endfor %}</ul>
+{%- endif -%}

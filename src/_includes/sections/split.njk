@@ -1,0 +1,28 @@
+{%- set side = s.image_side or 'right' -%}
+<div class="split split--{{ side }}{{ ' split--img-left' if side == 'left' }}{{ ' split--card' if s.layout == 'card' }}{{ ' split--wide-text' if s.layout == 'wide-text' }}">
+  <div class="split__body">
+    {%- if s.layout == 'card' %}<div class="card-over">{% endif %}
+    {%- set sh = { eyebrow: s.eyebrow, heading: s.heading, heading_size: s.heading_size, divider: s.divider, align: 'left' } %}
+    {%- set s0 = s %}{% set s = sh %}{% include "sechead.njk" %}{% set s = s0 %}
+    {%- if s.subheading %}<h3>{{ s.subheading }}</h3>{% endif %}
+    {%- if s.text %}<div class="body">{{ s.text | md | safe }}</div>{% endif %}
+    {%- set list = s.checks %}{% include "checks.njk" %}
+    {%- if s.after %}<div class="body" style="margin-top:20px">{{ s.after | md | safe }}</div>{% endif %}
+    {%- if s.button and s.button.label %}<div class="btn-row">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}
+    {%- if s.layout == 'card' %}</div>{% endif %}
+  </div>
+  {%- if s.layout != 'card' and (s.image or s.panel) %}
+  <div class="split__media">
+    {%- if s.image %}{% set i = { src: s.image, alt: s.image_alt } %}{% include "img.njk" %}{% endif %}
+    {%- if s.panel %}
+    <div class="panel">
+      {%- if s.panel.heading %}<h3>{{ s.panel.heading }}</h3>{% endif %}
+      {%- if s.panel.text %}<div class="body">{{ s.panel.text | md | safe }}</div>{% endif %}
+      {%- set list = s.panel.checks %}{% include "checks.njk" %}
+      {%- if s.panel.after %}<div class="body" style="margin-top:18px">{{ s.panel.after | md | safe }}</div>{% endif %}
+    </div>
+    {%- endif %}
+    {%- if s.image_title or s.image_text %}<div class="split__caption">{% if s.image_title %}<h3>{{ s.image_title }}</h3>{% endif %}{{ s.image_text | md | safe }}</div>{% endif %}
+  </div>
+  {%- endif %}
+</div>

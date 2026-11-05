@@ -1,0 +1,52 @@
+{
+  "name": "ShadowCaster Keys Flats Fishing",
+  "short_name": "ShadowCaster",
+  "url": "https://keysflatsfishing.com",
+  "phone": "(305) 587-7669",
+  "phone_link": "tel:+13055877669",
+  "email": "jjsmouse@comcast.net",
+  "address_line": "A&B Marina • 700 Front Street • Slip #3",
+  "street": "700 Front Street, Slip #3",
+  "city": "Key West",
+  "region": "FL",
+  "postal": "33040",
+  "map_link": "https://maps.app.goo.gl/6rLmPS3jgsiAfRFb7",
+  "map_embed": "https://www.google.com/maps?q=A%26B+Marina,+700+Front+St,+Key+West,+FL+33040&output=embed",
+  "instagram": "https://www.instagram.com/shadowcaster_charters/",
+  "booking_url": "https://fareharbor.com/embeds/book/keysflatsfishing/items/?full-items=yes",
+  "footer_blurb": "World-class tarpon, permit and light tackle back country fishing in Key West with Captain John Smouse.",
+  "copyright": "Copyright © Captain John Smouse",
+  "default_image": "/images/group-61-3-2.webp",
+  "tracking": {
+    "gtm": "GTM-P3JBGWXK",
+    "google_tag": "GT-K8K3Z538"
+  },
+  "nav": [
+    { "label": "About", "url": "/about/" },
+    { "label": "Trips & Rates", "url": "/trips-rates/" },
+    { "label": "Fishing Season", "url": "/fishing-season/", "children": [
+      { "label": "Spring", "url": "/spring/" },
+      { "label": "Summer", "url": "/summer/" },
+      { "label": "Fall", "url": "/fall/" },
+      { "label": "Winter", "url": "/winter/" }
+    ]},
+    { "label": "Species", "url": "#", "children": [
+      { "label": "Tarpon", "url": "/tarpon/" },
+      { "label": "Permit", "url": "/permit/" },
+      { "label": "Snapper", "url": "/snapper/" },
+      { "label": "Sharks", "url": "/sharks/" },
+      { "label": "Jacks", "url": "/jacks/" },
+      { "label": "Barracuda", "url": "/barracuda/" }
+    ]},
+    { "label": "Fishing Reports", "url": "/fishing-reports/" },
+    { "label": "FAQ’s", "url": "/faqs/" },
+    { "label": "Contact", "url": "/contact/" }
+  ],
+  "footer_links": [
+    { "label": "Key West Flat Fishing", "url": "/key-west-flat-fishing/" },
+    { "label": "About Captain John", "url": "/about/" },
+    { "label": "Key West Fishing Reports", "url": "/fishing-reports/" },
+    { "label": "Charter Fishing Rates", "url": "/trips-rates/" },
+    { "label": "Book a Fishing Charter in Key West", "url": "/key-west-flat-fishing/" }
+  ]
+}

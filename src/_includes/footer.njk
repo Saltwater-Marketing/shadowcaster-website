@@ -1,0 +1,25 @@
+{%- from "icons.njk" import pin, phone, send, insta -%}
+<footer class="site-footer">
+  <div class="wrap ftr">
+    <div class="ftr__brand">
+      <a href="/"><img src="/images/ae930634312013d2ba9b36cf82b6216862bb6813.webp" width="310" height="80" alt="ShadowCaster Keys Flats Fishing" loading="lazy"></a>
+      <p>{{ site.footer_blurb }}</p>
+    </div>
+    <div>
+      <h2 class="ftr__h">Quick Link</h2>
+      <ul class="ftr__list">{% for l in site.footer_links %}<li><a href="{{ l.url }}">{{ l.label }}</a></li>{% endfor %}</ul>
+    </div>
+    <div>
+      <h2 class="ftr__h">Contact</h2>
+      <ul class="ftr__list ftr__contact">
+        <li><a href="{{ site.map_link }}" target="_blank" rel="noopener">{{ pin() | safe }}{{ site.address_line }}</a></li>
+        <li><a href="{{ site.phone_link }}">{{ phone() | safe }}{{ site.phone }}</a></li>
+        <li><a href="mailto:{{ site.email }}">{{ send() | safe }}Email Captain John</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap ftr__bottom">
+    <p>{{ site.copyright }}</p>
+    <a href="{{ site.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{{ insta() | safe }}</a>
+  </div>
+</footer>

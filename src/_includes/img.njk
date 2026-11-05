@@ -1,0 +1,4 @@
+{#- usage: set i = {src, alt, cls, eager, sizes} -#}
+{%- if i.src -%}{%- set sz = i.src | imgsize -%}
+<img src="{{ i.src }}" alt="{{ i.alt or '' }}"{% if sz %} width="{{ sz.w }}" height="{{ sz.h }}"{% endif %}{% if i.cls %} class="{{ i.cls }}"{% endif %}{% if i.eager %} fetchpriority="high"{% else %} loading="lazy" decoding="async"{% endif %}>
+{%- endif -%}

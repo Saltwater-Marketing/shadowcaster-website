@@ -1,0 +1,7 @@
+{%- set al = s.align or 'center' -%}
+<div class="{{ 'center' if al == 'center' }}" style="{{ 'max-width:900px;margin:0 auto' if al == 'center' }}">
+{% include "sechead.njk" %}
+{%- if s.text %}<div class="body">{{ s.text | md | safe }}</div>{% endif %}
+{%- set list = s.checks %}{% include "checks.njk" %}
+{%- if s.button and s.button.label %}<div class="btn-row">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}
+</div>

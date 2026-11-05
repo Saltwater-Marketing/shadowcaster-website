@@ -1,0 +1,26 @@
+---
+layout: base.njk
+---
+{%- from "icons.njk" import arrow -%}
+<section class="post-hero"><h1>{{ title }}</h1><time datetime="{{ page.date | date_iso }}">{{ page.date | date_long }}</time></section>
+<section class="sec"><div class="wrap post-layout">
+  <article class="post-body">
+    {%- if image %}<img src="{{ image }}" alt="{{ title }}" fetchpriority="high">{% endif %}
+    {{ content | safe }}
+  </article>
+  <aside class="post-side">
+    <div class="share">Share:
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ (site.url + page.url) | urlencode }}" target="_blank" rel="noopener" aria-label="Share on Facebook">f</a>
+      <a href="https://twitter.com/intent/tweet?url={{ (site.url + page.url) | urlencode }}" target="_blank" rel="noopener" aria-label="Share on X">x</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ (site.url + page.url) | urlencode }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn">in</a>
+    </div>
+    <h2>More Posts</h2>
+    <ul>
+    {%- set n = 0 %}{% for p in collections.posts %}{% if p.url != page.url and n < 4 %}{% set n = n + 1 %}
+      <li><img src="{{ p.data.image }}" alt="" loading="lazy"><div><a href="{{ p.url }}">{{ p.data.title }}</a>{{ p.data.excerpt | excerpt(90) }}</div></li>
+    {%- endif %}{% endfor %}
+    </ul>
+  </aside>
+</div></section>
+{%- set s = { type: 'text', bg: 'sky', eyebrow: 'get started', heading: 'Plan Your Trip With ShadowCaster', divider: false, text: 'Whether you want steady mixed-species action, a calm day exploring the Backcountry, or a chance at tarpon during the migration, our captains will guide you through the best opportunities the season offers.', button: { label: 'Book a Key West Flats Fishing Charter' } } %}
+{% include "section.njk" %}

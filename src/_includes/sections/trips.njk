@@ -1,0 +1,21 @@
+{%- from "icons.njk" import tag -%}
+{% include "sechead.njk" %}
+<div class="cards cards--white" style="--cols:2">
+{%- for t in trips.trips %}
+  <div class="card trip-card{{ ' trip-card--wide' if loop.last and trips.trips.length % 2 == 1 }}">
+    <div class="card__img">{% set i = { src: t.image, alt: t.name + ' Key West fishing charter' } %}{% include "img.njk" %}<span class="price-tag">{{ t.price }}</span></div>
+    <div class="card__body">
+      <h3>{{ t.name }}</h3>
+      <div class="card__text"><p>{{ t.text }}</p></div>
+      <div class="btn-row"><a class="btn btn--rate" href="{{ site.booking_url }}" target="_blank" rel="noopener">{{ tag() | safe }}<span>Rate: {{ t.price }}</span></a></div>
+    </div>
+  </div>
+{%- endfor %}
+  <div class="trip-facts">
+    <p><b>Capacity:</b> {{ trips.capacity }}</p>
+    <p><b>Included:</b> {{ trips.included }}</p>
+    <p><b>License:</b> {{ trips.license }}</p>
+    <p><b>Boat:</b> {{ trips.boat }}</p>
+  </div>
+</div>
+{%- if s.button and s.button.label %}<div class="btn-row center" style="margin-top:-20px;position:relative">{% set b = s.button %}{% include "button.njk" %}</div>{% endif %}

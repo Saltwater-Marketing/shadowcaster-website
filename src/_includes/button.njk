@@ -1,0 +1,6 @@
+{#- usage: {% set b = {label, url, style} %}{% include "button.njk" %} -#}
+{%- from "icons.njk" import arrow -%}
+{%- if b and b.label -%}
+{%- set burl = b.url or site.booking_url -%}
+<a class="btn {{ 'btn--' + b.style if b.style }}" href="{{ burl }}"{% if burl | external %} target="_blank" rel="noopener"{% endif %}><span>{{ b.label }}</span>{{ arrow() | safe }}</a>
+{%- endif -%}

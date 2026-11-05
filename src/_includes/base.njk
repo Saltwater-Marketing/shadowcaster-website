@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{%- set pageTitle = seo_title or ((title | plain) + " | Key West Flats Fishing") %}
+{%- set canonical = site.url + page.url %}
+{%- set ogImage = site.url + (og_image or (hero and hero.image) or image or site.default_image) %}
+<title>{{ pageTitle }}</title>
+<meta name="description" content="{{ description }}">
+<link rel="canonical" href="{{ canonical }}">
+<meta property="og:type" content="{{ 'article' if layout == 'post.njk' else 'website' }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ pageTitle }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:image" content="{{ ogImage }}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon-32.png" sizes="32x32">
+<link rel="icon" href="/favicon.png" sizes="192x192">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preload" href="/fonts/PCNavita-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+{%- if preload_image %}<link rel="preload" as="image" href="{{ preload_image }}" fetchpriority="high">{% endif %}
+<link rel="stylesheet" href="/assets/css/site.css?v={{ build.version }}">
+{#- Tracking only loads on the live domain, so local tests and Netlify previews never count as visits. #}
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+if (/(^|\.)keysflatsfishing\.com$/.test(location.hostname)) {
+  {%- if site.tracking.gtm %}
+  (function(w,d,s,l,i){w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','{{ site.tracking.gtm }}');
+  {%- endif %}
+  {%- if site.tracking.google_tag %}
+  (function(d){var j=d.createElement('script');j.async=true;j.src='https://www.googletagmanager.com/gtag/js?id={{ site.tracking.google_tag }}';d.head.appendChild(j);})(document);
+  gtag('js',new Date());gtag('config','{{ site.tracking.google_tag }}');
+  {%- endif %}
+}
+</script>
+{%- if schema %}<script type="application/ld+json">{{ schema | dump | safe }}</script>{% endif %}
+{%- block head %}{% endblock %}
+</head>
+<body class="{{ body_class }}">
+{%- if site.tracking.gtm %}<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.tracking.gtm }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>{% endif %}
+<a class="skip" href="#main">Skip to content</a>
+{% include "header.njk" %}
+<main id="main">
+{{ content | safe }}
+</main>
+{% include "footer.njk" %}
+<script src="/assets/js/site.js?v={{ build.version }}" defer></script>
+<script src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes" defer></script>
+</body>
+</html>
