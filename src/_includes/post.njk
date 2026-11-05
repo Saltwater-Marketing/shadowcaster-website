@@ -9,10 +9,10 @@ layout: base.njk
     {{ content | safe }}
   </article>
   <aside class="post-side">
-    <div class="share">Share:
-      <a href="https://www.facebook.com/sharer/sharer.php?u={{ (site.url + page.url) | urlencode }}" target="_blank" rel="noopener" aria-label="Share on Facebook">f</a>
-      <a href="https://twitter.com/intent/tweet?url={{ (site.url + page.url) | urlencode }}" target="_blank" rel="noopener" aria-label="Share on X">x</a>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ (site.url + page.url) | urlencode }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn">in</a>
+    <div class="share"><span>Share:</span>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ (site.url + page.url) | urlencode }}" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url={{ (site.url + page.url) | urlencode }}" target="_blank" rel="noopener">X</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ (site.url + page.url) | urlencode }}" target="_blank" rel="noopener">LinkedIn</a>
     </div>
     <h2>More Posts</h2>
     <ul>

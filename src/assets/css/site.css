@@ -263,7 +263,7 @@ h1{font-size:var(--h1)} h2{font-size:var(--h2)} h3{font-size:var(--h3)} h4{font-
 .season-tag--winter{background:#fff;color:var(--navy)}
 .season-tag--spring{background:#0D785B;color:#fff}
 .season-tag--summer{background:#F1FF7D;color:var(--navy)}
-.season-tag--fall{background:#EB9911;color:#fff}
+.season-tag--fall{background:#EB9911;color:var(--navy)}
 .season-item__media{position:relative}
 .season-item__media img{border:8px solid #fff;box-shadow:0 8px 24px rgba(0,0,0,.18);transform:rotate(1.5deg)}
 .season-item__media .btn{position:absolute;right:14px;bottom:-22px;font-size:24px;padding:16px 26px 18px}
@@ -423,7 +423,7 @@ h1{font-size:var(--h1)} h2{font-size:var(--h2)} h3{font-size:var(--h3)} h4{font-
 .season-pills .pill--winter{background:#fff;color:var(--navy)}
 .season-pills .pill--spring{background:#0D785B;color:#fff}
 .season-pills .pill--summer{background:#F1FF7D;color:var(--navy)}
-.season-pills .pill--fall{background:#EB9911;color:#fff}
+.season-pills .pill--fall{background:#EB9911;color:var(--navy)}
 @media (max-width:600px){.checks--2col{grid-template-columns:1fr}}
 /* helper B: white panel inside blue/dark sections keeps dark text + blue icons */
 .sec--blue .panel h3,.sec--dark .panel h3{color:var(--navy)}
@@ -461,3 +461,6 @@ h1{font-size:var(--h1)} h2{font-size:var(--h2)} h3{font-size:var(--h3)} h4{font-
 /* Speed: section/footer background images only download when the section is about to scroll into view
    (site.js adds .bg-on). Without JavaScript everything shows normally. */
 .js .lazy-bg:not(.bg-on),.js .lazy-bg:not(.bg-on) *{background-image:none!important}
+.share{flex-wrap:wrap;gap:8px 10px}
+.share a{font:600 14px/1 var(--sans);text-decoration:none;border:2px solid var(--blue);color:var(--blue);padding:10px 14px;min-height:44px;display:inline-flex;align-items:center}
+.share a:hover{background:var(--blue);color:#fff}
