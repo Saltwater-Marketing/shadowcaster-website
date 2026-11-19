@@ -321,7 +321,9 @@ collections:
           - { label: "Tripadvisor 'write a review' link", name: tripadvisor_review_url, widget: string }
           - { label: "Reviews shown on the site", name: reviews, widget: list, summary: "{{fields.name}} ({{fields.platform}})", fields: [
               { label: "Name", name: name, widget: string }, { label: "Date", name: date, widget: string },
-              { label: "Platform", name: platform, widget: select, options: [Google, Tripadvisor] }, { label: "Review", name: text, widget: text } ] }
+              { label: "Platform", name: platform, widget: select, options: [Google, Tripadvisor] },
+              { label: "Review title (Tripadvisor)", name: title, widget: string, required: false }, { label: "Review", name: text, widget: text },
+              { label: "Reviewer photo (small, square)", name: avatar, widget: image, required: false }, { label: "Trip photo", name: photo, widget: image, required: false } ] }
       - name: site
         label: "Phone, Email, Booking & Menu"
         file: src/_data/site.json

@@ -66,6 +66,7 @@ sections:
     image_alt: Angler and guide holding a permit caught fishing the flats in key west on a fishing charter
   - type: split
     layout: card
+    image_side: left
     bg: photo
     bg_image: /images/image-19-2.webp
     eyebrow: fishing in Florida

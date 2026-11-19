@@ -1,17 +1,43 @@
-{%- from "icons.njk" import star -%}
+{%- from "icons.njk" import star, google, tripadvisor, verified -%}
 <div class="center"><div class="stars" aria-hidden="true" style="margin-bottom:14px">{% for n in range(5) %}{{ star() | safe }}{% endfor %}</div></div>
-{% include "sechead.njk" %}
-<div data-reviews>
-  <p class="reviews__summary"><span>Excellent</span><span class="stars" role="img" aria-label="{{ reviews.rating }} out of 5 stars">{% for n in range(5) %}{{ star() | safe }}{% endfor %}</span><span>{{ reviews.rating }} · {{ reviews.count }} reviews on Google &amp; Tripadvisor</span></p>
-  <div class="reviews__track" tabindex="0" role="region" aria-label="Customer reviews">
-  {%- for r in reviews.reviews %}
-    <article class="review">
-      <div class="review__top"><div><div class="review__name">{{ r.name }}</div><div class="review__date">{{ r.date }}</div></div><span class="review__src">{{ r.platform }}</span></div>
-      <div class="stars" role="img" aria-label="5 stars">{% for n in range(5) %}{{ star() | safe }}{% endfor %}</div>
-      <p class="review__text">{{ r.text }}</p><button class="review__more" type="button">Read more</button>
-    </article>
-  {%- endfor %}
+<div class="sechead--grad">{% include "sechead.njk" %}</div>
+<div class="tiw" data-reviews>
+  <div class="tiw__head">
+    <div class="tiw__tabs" role="tablist" aria-label="Filter reviews by site">
+      <button type="button" role="tab" aria-selected="true" data-src="all">All reviews</button>
+      <button type="button" role="tab" aria-selected="false" data-src="Google">{{ google() | safe }}Google</button>
+      <button type="button" role="tab" aria-selected="false" data-src="Tripadvisor">{{ tripadvisor() | safe }}Tripadvisor</button>
+    </div>
+    <div class="tiw__summary">
+      <p><strong>Excellent</strong><span class="stars" role="img" aria-label="{{ reviews.rating }} out of 5 stars">{% for n in range(5) %}{{ star() | safe }}{% endfor %}</span><strong>{{ reviews.rating }}</strong><span class="tiw__sep" aria-hidden="true"></span><strong>{{ reviews.count }} reviews</strong></p>
+      <div class="tiw__write">
+        <button type="button" class="tiw__writebtn" aria-expanded="false">Write a review</button>
+        <div class="tiw__menu">
+          <a href="{{ reviews.google_review_url }}" target="_blank" rel="noopener">{{ google() | safe }}Google</a>
+          <a href="{{ reviews.tripadvisor_review_url }}" target="_blank" rel="noopener">{{ tripadvisor() | safe }}Tripadvisor</a>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="reviews__nav"><button type="button" data-dir="-1" aria-label="Previous reviews">&larr;</button><button type="button" data-dir="1" aria-label="Next reviews">&rarr;</button></div>
-  <p class="reviews__links"><a href="{{ reviews.google_review_url }}" target="_blank" rel="noopener">Write a Google review</a><a href="{{ reviews.tripadvisor_review_url }}" target="_blank" rel="noopener">Write a Tripadvisor review</a></p>
+  <div class="tiw__body">
+    <button type="button" class="tiw__arrow tiw__arrow--prev" data-dir="-1" aria-label="Previous reviews"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="reviews__track" tabindex="0" role="region" aria-label="Customer reviews">
+    {%- for r in reviews.reviews %}
+      <article class="review" data-src="{{ r.platform }}">
+        <div class="review__top">
+          {%- if r.avatar %}<img class="review__avatar" src="{{ r.avatar }}" alt="" width="40" height="40" loading="lazy" decoding="async">{% else %}<span class="review__avatar review__avatar--letter" aria-hidden="true">{{ r.name | first | upper }}</span>{% endif %}
+          <div class="review__who"><div class="review__name">{{ r.name }}</div><div class="review__date">{{ r.date }}</div></div>
+          <span class="review__src" title="Posted on {{ r.platform }}">{{ (google() if r.platform == 'Google' else tripadvisor()) | safe }}<span class="sr-only">Posted on {{ r.platform }}</span></span>
+        </div>
+        <div class="review__stars"><span class="stars" role="img" aria-label="5 stars">{% for n in range(5) %}{{ star() | safe }}{% endfor %}</span>{{ verified() | safe }}</div>
+        <div class="review__content">
+          {%- if r.photo %}<img class="review__photo" src="{{ r.photo }}" alt="Photo from {{ r.name }}’s fishing trip" width="80" height="80" loading="lazy" decoding="async">{% endif %}
+          <p class="review__text">{% if r.title %}<strong>{{ r.title }}</strong> {% endif %}{{ r.text }}</p>
+        </div>
+        <button class="review__more" type="button">Read more</button>
+      </article>
+    {%- endfor %}
+    </div>
+    <button type="button" class="tiw__arrow tiw__arrow--next" data-dir="1" aria-label="Next reviews"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
 </div>

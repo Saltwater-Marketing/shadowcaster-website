@@ -27,19 +27,62 @@
   else window.addEventListener('load', later);
 })();
 
-// Reviews: read more + arrows
+// Reviews widget: read more, site tabs, write-a-review menu, arrows, autoplay
 (function () {
-  document.querySelectorAll('.review__text').forEach(function (t) {
-    var b = t.nextElementSibling;
+  function fit(t) {
+    var b = t.parentNode.nextElementSibling;
     if (!b || !b.classList.contains('review__more')) return;
-    if (t.scrollHeight <= t.clientHeight + 2) { b.remove(); return; }
-    b.addEventListener('click', function () { var o = t.classList.toggle('open'); b.textContent = o ? 'Show less' : 'Read more'; });
-  });
+    b.hidden = !t.classList.contains('open') && t.scrollHeight <= t.clientHeight + 2 && !t.parentNode.querySelector('.review__photo');
+  }
   document.querySelectorAll('[data-reviews]').forEach(function (w) {
-    var tr = w.querySelector('.reviews__track');
-    w.querySelectorAll('[data-dir]').forEach(function (b) {
-      b.addEventListener('click', function () { tr.scrollBy({ left: tr.clientWidth * (+b.dataset.dir), behavior: 'smooth' }); });
+    var tr = w.querySelector('.reviews__track'), items = [].slice.call(tr.querySelectorAll('.review'));
+    items.forEach(function (r) {
+      var t = r.querySelector('.review__text'), b = r.querySelector('.review__more');
+      fit(t);
+      b.addEventListener('click', function () {
+        var o = t.classList.toggle('open'); b.textContent = o ? 'Hide' : 'Read more'; stop();
+      });
     });
+    // tabs
+    w.querySelectorAll('.tiw__tabs button').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        w.querySelectorAll('.tiw__tabs button').forEach(function (x) { x.setAttribute('aria-selected', x === tab); });
+        items.forEach(function (r) { r.hidden = tab.dataset.src !== 'all' && r.dataset.src !== tab.dataset.src; });
+        tr.scrollLeft = 0; items.forEach(function (r) { if (!r.hidden) fit(r.querySelector('.review__text')); });
+      });
+    });
+    // write a review menu
+    var wr = w.querySelector('.tiw__write'), wb = wr && wr.querySelector('.tiw__writebtn');
+    if (wb) {
+      wb.addEventListener('click', function (e) { e.stopPropagation(); var o = wr.classList.toggle('open'); wb.setAttribute('aria-expanded', o); });
+      document.addEventListener('click', function () { wr.classList.remove('open'); wb.setAttribute('aria-expanded', false); });
+    }
+    // arrows (wrap around at the ends)
+    function go(dir) {
+      var max = tr.scrollWidth - tr.clientWidth;
+      if (dir > 0 && tr.scrollLeft >= max - 4) tr.scrollTo({ left: 0, behavior: 'smooth' });
+      else if (dir < 0 && tr.scrollLeft <= 4) tr.scrollTo({ left: max, behavior: 'smooth' });
+      else {
+        var first = items.filter(function (r) { return !r.hidden; })[0];
+        var step = first ? first.offsetWidth + parseFloat(getComputedStyle(tr).columnGap || 16) : tr.clientWidth;
+        tr.scrollBy({ left: step * dir, behavior: 'smooth' });
+      }
+    }
+    w.querySelectorAll('[data-dir]').forEach(function (b) {
+      b.addEventListener('click', function () { stop(); go(+b.dataset.dir); });
+    });
+    // autoplay every 6 seconds while on screen; stops once the visitor interacts
+    var timer = null, stopped = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function stop() { stopped = true; clearInterval(timer); timer = null; }
+    ['pointerdown', 'wheel', 'touchstart', 'keydown'].forEach(function (ev) { tr.addEventListener(ev, stop, { passive: true }); });
+    w.addEventListener('mouseenter', function () { clearInterval(timer); timer = null; });
+    w.addEventListener('mouseleave', function () { if (!stopped && visible && !timer) timer = setInterval(function () { go(1); }, 6000); });
+    var visible = false;
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) {
+      visible = en[0].isIntersecting;
+      clearInterval(timer); timer = null;
+      if (visible && !stopped) timer = setInterval(function () { go(1); }, 6000);
+    }).observe(w);
   });
 })();
 
