@@ -1,4 +1,25 @@
 # Generated during the WordPress migration (Nov 2026). Old URL  ->  new URL  status
+# Added Nov 2026 after checking every address in Search Console (Aug 2025 to Nov 2026).
+# Exact addresses first: Netlify uses the first rule that matches.
+/key-west-fishing-reports/                                /fishing-reports/            301
+/key-west-fishing-reports/winter-fishing-in-key-west-2/   /winter-fishing-in-key-west/ 301
+/key-west-fishing-reports/tarpon-season/*                 /tarpon-season/              301
+/key-west-fishing-reports/*                               /:splat                      301
+/keys-back-country-fishing/                               /fishing-reports/            301
+/keys-back-country-fishing/*                              /fishing-reports/            301
+/tranquil-nature-in-florida-keys/                         /fishing-reports/            301
+/thanksgiving-in-key-west/                                /fishing-reports/            301
+/gallery/                                                 /fishing-reports/            301
+/keys-flats-fishing-rates/                                /trips-rates/                301
+/book-a-key-west-fishing-charter/                         /trips-rates/                301
+/captain-justin-valakis/                                  /about/                      301
+/captain-justin-valakis/*                                 /about/                      301
+/meet-the-crew/                                           /about/                      301
+/flats-fishing-boats/                                     /about/                      301
+/reviews/                                                 /                            301
+/slide-mobile-1/                                          /                            301
+/584b474f-f357-4d95-bb54-087e7aa3f0d9/                    /                            301
+/7370418b-19c4-4acf-bb83-f41e7e08c66c/                    /                            301
 /category/*          /fishing-reports/   301
 /tag/*               /fishing-reports/   301
 /author/*            /about/             301
